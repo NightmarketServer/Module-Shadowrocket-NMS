@@ -1,0 +1,17 @@
+# =========================================
+# Name：Spotify Premium Unlock
+# Author：Nightmarket Server
+# Date upadte：2026-08-31
+# Mô tả：Mở khóa 1 phần premim 
+# Discord: https://discord.gg/juY9tw5AJY
+# =========================================
+
+[Header Rewrite]
+http-request ^https:\/\/(?:spclient\.wg\.spotify\.com|[A-Za-z0-9-]+-spclient\.spotify\.com(?::443)?)\/user-customization-service\/v1\/customize$ header-del if-none-match
+
+[Script]
+spotify_request=type=http-request,pattern=^https:\/\/(?:spclient\.wg\.spotify\.com|[A-Za-z0-9-]+-spclient\.spotify\.com(?::443)?)\/(?:artistview\/v1\/artist|album-entity-view\/v2\/album)(?:[/?#]|$),requires-body=0,script-path=https://raw.githubusercontent.com/NightmarketServer/Module-Shadowrocket-NMS/refs/heads/main/Module-Shadowrocket-NMS/Spotify-main/fixsp
+spotify_response=type=http-response,pattern=^https:\/\/(?:spclient\.wg\.spotify\.com|[A-Za-z0-9-]+-spclient\.spotify\.com(?::443)?)\/(?:bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://raw.githubusercontent.com/NightmarketServer/Module-Shadowrocket-NMS/refs/heads/main/Module-Shadowrocket-NMS/Spotify-main/S1.js
+
+[MITM]
+hostname = %APPEND% *spclient.spotify.com,spclient.wg.spotify.com
