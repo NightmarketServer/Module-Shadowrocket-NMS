@@ -16,7 +16,7 @@ var locket02 = {
     expires_date: "2027-09-02T23:59:59Z",   // ngày hết hạn
     grace_period_expires_date: null,
     unsubscribe_detected_at: null,
-    original_purchase_date: "2027-11-25T00:00:00Z", // ngày mua
+    original_purchase_date: "2027-09-002T00:00:00Z", // ngày mua
     purchase_date: "2027-09-02T00:00:00Z",          // ngày mua
     store: "app_store"
 };
