@@ -13,19 +13,19 @@ var locket02 = {
     ownership_type: "PURCHASED",
     billing_issues_detected_at: null,
     period_type: "normal",
-    expires_date: "2027-09-02T23:59:59Z",   // ngày hết hạn
+    expires_date: "2026-09-02T23:59:59Z",   // ngày hết hạn
     grace_period_expires_date: null,
     unsubscribe_detected_at: null,
-    original_purchase_date: "2027-09-02T00:00:00Z", // ngày mua
-    purchase_date: "2027-09-02T00:00:00Z",          // ngày mua
+    original_purchase_date: "2026-09-02T00:00:00Z", // ngày mua
+    purchase_date: "2026-09-02T00:00:00Z",          // ngày mua
     store: "app_store"
 };
 
 var locket01 = {
     grace_period_expires_date: null,
-    purchase_date: "2027-09-02T00:00:00Z",          // ngày mua
+    purchase_date: "2026-09-02T00:00:00Z",          // ngày mua
     product_identifier: "com.locket02.premium.yearly",
-    expires_date: "2027-09-02T23:59:59Z"            // ngày hết hạn
+    expires_date: "2026-09-02T23:59:59Z"            // ngày hết hạn
 };
 
 const match = Object.keys(mapping).find(e => ua.includes(e));
