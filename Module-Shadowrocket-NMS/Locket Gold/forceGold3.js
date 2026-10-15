@@ -45,7 +45,7 @@ if (ua.includes("Locket")) {
             tag: "LOCKET GOLD",
             tag_gradient: true,
             tag_style: "gold_gradient",
-            title: "Đã Kich Hoạt Gold Thành Công 💛",
+            title: "Đã Kich Hoạt 💛",
             feature_set: [
                 {
                     title: "Youtube @NightmarketServer ✨",
