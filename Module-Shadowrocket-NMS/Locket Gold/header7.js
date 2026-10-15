@@ -2,7 +2,6 @@
 > deleteHeader by NightmarketServer
 ***********************************************/
 
-
 const version = 'V1.0.2';
 
 
