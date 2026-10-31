@@ -1,5 +1,7 @@
-#!name=NightMarket Server - YouTube + Locket
-#!desc=Gộp module YouTube NMS và Locket Gold NMS
+
+#!name=NightMarket Server - YouTube + Locket + Spotify
+#!desc=3 IN 1 | YouTube + Locket Gold + Spotify
+#!author=Nightmarket Server
 # 💬 Discord: https://discord.gg/juY9tw5AJY
 # 🚀 Maintained by: Nightmarket Server
 
@@ -10,30 +12,54 @@ user-agent = Locket/1.0.0 (iPhone; iOS 26.3; Scale/3.00)
 AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT
 AND,((DOMAIN,youtubei.googleapis.com), (PROTOCOL,UDP)),REJECT
 
+[Header Rewrite]
+# ===== Spotify iOS15 (app2smile) =====
+http-request ^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/user-customization-service\/v1\/customize$ header-del if-none-match
+
 [Url Rewrite]
-# /Modules/YT-Adblocker.module
+# ===== YouTube Adblocker =====
 # ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad - reject-img
 ^https?:\/\/[\w-]+\.googlevideo\.com\/(?!(dclk_video_ads|videoplayback\?)).+&oad _ reject-200
-# ======= Universal Ad Request ======= #
+
+# ===== Universal Ad Request =====
 ^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads _ reject-200
 ^https?:\/\/(www|s)\.youtube\.com\/(pagead|ptracking) _ reject-200
 ^https?:\/\/s\.youtube\.com\/api\/stats\/qoe\?adcontext _ reject-200
-# ======= General Video Ad request ======= #
+
+# ===== General Video Ad request =====
 (^https?:\/\/[\w-]+\.googlevideo\.com\/(?!dclk_video_ads).+?)&ctier=L(&.+?),ctier,(.+) $1$2$3 302
 
 [Map Local]
 ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data="" status-code=200
 
 [Script]
-# ===== YouTube module =====
-# ======= Search|Play Page|Short Video ||| PiP|Background Play ======= #
-# youtube = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting),requires-body=1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.response.preview.js
-# youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{scriptExecutionEngine}}},script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.request.preview.js
-# youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{scriptExecutionEngine}}},script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.response.preview.js,argument="{"lyricLang":"{{{lyricLang}}}","captionLang":"{{{captionLang}}}","blockUpload":{{{blockUpload}}},"blockImmersive":{{{blockImmersive}}},"debug":{{{debug}}}}"
-youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/(youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch))(\?(.*))?$,requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/youtube.response.js,argument="{"lyricLang":"{{{lyricLang}}}","captionLang":"{{{captionLang}}}","blockUpload":"{{{blockUpload}}}","blockImmersive":"{{{blockImmersive}}}","blockShorts":"{{{blockShorts}}}","debug":"{{{debug}}}"}"
+# ==========================================
+# YouTube module
+# ==========================================
 
-# ===== Locket module =====
-# ~ Locket Gold - Shadowrocket / Surge / LanceX
+# ===== Search | Play Page | Shorts | PiP | Background Play =====
+# youtube = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting),requires-body=1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.response.preview.js
+
+# youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{scriptExecutionEngine}}},script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.request.preview.js
+
+# youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{scriptExecutionEngine}}},script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.response.preview.js,argument="{"lyricLang":"{{{lyricLang}}}","captionLang":"{{{captionLang}}}","blockUpload":{{{blockUpload}}},"blockImmersive":{{{blockImmersive}}},"debug":{{{debug}}}}"
+
+youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/(youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch))(\?(.*))?$,requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/youtube.response.js,argument="{"lyricLang":"{{{lyricLang}}}","captionLang":"{{{captionLang}}}","blockUpload":"{{{blockUpload}}}","blockImmersive":"{{{blockImmersive}}}","blockShorts":"{{{blockShorts}}}","debug":"{{{debug}}}"}
+
+# ==========================================
+# Spotify iOS15 (app2smile)
+# ==========================================
+
+# Partial feature unlock
+# Source notes: audio quality cannot be set to Very High
+
+spotify-json = type=http-request,pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/,requires-body=0,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-json.js
+
+spotify-proto = type=http-response,pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-proto.js,script-update-interval=0
+
+# ==========================================
+# Locket Gold
+# ==========================================
 
 # RevenueCat Response
 revenuecat = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$), script-path=https://raw.githubusercontent.com/NightmarketServer/Module-Shadowrocket-NMS/refs/heads/main/Module-Shadowrocket-NMS/Locket%20Gold/locketfix8.js, requires-body=true, max-size=-1, timeout=60
@@ -45,4 +71,4 @@ deleteHeader = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(
 locket_rc = type=http-response, pattern=^https:\/\/firebaseremoteconfig\.googleapis\.com\/v1\/projects\/locket-4252a\/.+, script-path=https://raw.githubusercontent.com/NightmarketServer/Module-Shadowrocket-NMS/refs/heads/main/Module-Shadowrocket-NMS/Locket%20Gold/forceGold4.3.js, requires-body=true, max-size=-1, timeout=60
 
 [MITM]
-hostname = %APPEND% -redirector*.googlevideo.com,*.googlevideo.com,www.youtube.com,s.youtube.com,youtubei.googleapis.com,api.revenuecat.com,firebaseremoteconfig.googleapis.com
+hostname = %APPEND% -redirector*.googlevideo.com,*.googlevideo.com,www.youtube.com,s.youtube.com,youtubei.googleapis.com,api.revenuecat.com,firebaseremoteconfig.googleapis.com,spclient.wg.spotify.com,*spclient.spotify.com
