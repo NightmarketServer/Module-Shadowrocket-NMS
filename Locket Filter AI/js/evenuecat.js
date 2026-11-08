@@ -3,22 +3,13 @@ const mapping = {
   'Locket': ['Gold']
 };
 // =========   Phần cố định  ========= // 
-// =========  @Nightmarketserver ========= // 
-var ua = (typeof $request !== "undefined" && $request && $request.headers) ? ($request.headers["User-Agent"] || $request.headers["user-agent"] || "") : "";
-var obj = {};
-try {
+var ua = $request.headers["User-Agent"] || $request.headers["user-agent"],
   obj = JSON.parse($response.body);
-} catch (e) {
-  obj = {};
-}
-if (!obj || typeof obj !== "object") {
-  obj = {};
-}
 obj.Attention = "Chúc mừng bạn! Vui lòng không bán hoặc chia sẻ cho người khác!";
 var NMS = {
       auto_resume_date: null,
       display_name: "locket_1600_1y",
-      is_sandbox: false,
+      is_sandbox: true,
       ownership_type: "PURCHASED",
       billing_issues_detected_at: null,
       management_url: "https://apps.apple.com/account/subscriptions",
@@ -39,73 +30,14 @@ var NMS = {
   locketGold = {
       grace_period_expires_date: null,
       purchase_date: "2027-11-25T10:10:14Z",
-      original_purchase_date: "2005-01-09T10:10:15Z",
       product_identifier: "locket_1600_1y",
-      product_plan_identifier: "locket_1600_1y",
-      ownership_type: "PURCHASED",
-      store: "app_store",
-      is_sandbox: false,
-      unsubscribe_detected_at: null,
-      billing_issues_detected_at: null,
       expires_date: "9999-01-09T10:10:14Z"
   };
-obj.subscriber = obj.subscriber || {};
-obj.subscriber.subscriptions = obj.subscriber.subscriptions || {};
-obj.subscriber.entitlements = obj.subscriber.entitlements || {};
-obj.subscriber.non_subscriptions = obj.subscriber.non_subscriptions || {};
-obj.subscriber.other_purchases = obj.subscriber.other_purchases || {};
-
-const subKeys = [
-  "locket_1600_1y",
-  "Gold",
-  "gold",
-  "pro",
-  "locket_gold",
-  "Locket Gold",
-  "holiday_effects",
-  "camera_filters",
-  "camera_filter",
-  "filters",
-  "filter",
-  "ai_filters",
-  "ai_filter",
-  "locket_gold_yearly",
-  "gold_yearly"
-];
-subKeys.forEach(function(k) {
-  obj.subscriber.subscriptions[k] = minhhiep08;
-});
-
-const entKeys = [
-  "Gold",
-  "gold",
-  "pro",
-  "locket_gold",
-  "Locket Gold",
-  "holiday_effects",
-  "camera_filters",
-  "camera_filter",
-  "holiday_filter",
-  "holidays",
-  "effects",
-  "filters",
-  "filter",
-  "ai_filters",
-  "ai_filter",
-  "locket_gold_yearly",
-  "gold_yearly"
-];
-entKeys.forEach(function(k) {
-  obj.subscriber.entitlements[k] = locketGold;
-});
-
-obj.request_date = obj.request_date || "2026-11-01T00:00:00Z";
-obj.request_date_ms = obj.request_date_ms || Date.now();
-
+const match = Object.keys(mapping).find(e => ua.includes(e));
+if (match) {
+  let [e, s] = mapping[match];
+  s ? (locketGold.product_identifier = s, obj.subscriber.subscriptions[s] = NMS) : obj.subscriber.subscriptions["locket_1600_1y"] = NMS, obj.subscriber.entitlements[e] = locketGold
+} else obj.subscriber.subscriptions["locket_1600_1y"] = NMS, obj.subscriber.entitlements.pro = locketGold;
 $done({
-  status: 200,
-  headers: Object.assign({}, ($response && $response.headers) || {}, {
-    "content-type": "application/json"
-  }),
   body: JSON.stringify(obj)
 });
