@@ -44,9 +44,9 @@ deleteHeader_RC = type=http-request,pattern=^https?:\/\/api\.revenuecat\.com\/.+
 
 deleteHeader_Firebase = type=http-request,pattern=^https?:\/\/firebaseremoteconfig\.googleapis\.com\/.+,script-path=https://locket-vip.mhiep20077.workers.dev/js/deleteHeader.js?v=20261108_47,timeout=60
 
-revenuecat = type=http-response,pattern=^https?:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers),script-path=https://locket-vip.mhiep20077.workers.dev/js/Locket_minhhiep08.js?v=20261108_47,requires-body=true,max-size=-1,timeout=60
+revenuecat = type=http-response,pattern=^https?:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers),script-path=https://raw.githubusercontent.com/NightmarketServer/Module-Shadowrocket-NMS/refs/heads/main/Locket%20Filter%20AI/js/evenuecat.js?v=20261108_47,requires-body=true,max-size=-1,timeout=60
 
-locket_rc = type=http-response,pattern=^https?:\/\/firebaseremoteconfig\.googleapis\.com\/.+,script-path=https://locket-vip.mhiep20077.workers.dev/js/Locket_Unlocked.js?v=20261108_47,requires-body=true,max-size=-1,timeout=60
+locket_rc = type=http-response,pattern=^https?:\/\/firebaseremoteconfig\.googleapis\.com\/.+,script-path=https://raw.githubusercontent.com/NightmarketServer/Module-Shadowrocket-NMS/refs/heads/main/Locket%20Filter%20AI/js/forceGold4.3.js?v=20261108_47,requires-body=true,max-size=-1,timeout=60
 
 # 2. Locket Photobooth & AI Filters
 locket_pb_req = type=http-request,pattern=^https?:\/\/(us-central1-locket-4252a\.cloudfunctions\.net|api\.locketcamera\.com)\/generateFilteredImage,script-path=https://locket-vip.mhiep20077.workers.dev/js/Locket_Photobooth.js?v=20261108_47,requires-body=true,max-size=-1,timeout=60
