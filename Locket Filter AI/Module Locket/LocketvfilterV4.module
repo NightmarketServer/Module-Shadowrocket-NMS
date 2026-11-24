@@ -1,0 +1,33 @@
+
+#!name=NightMarket Server - Locket Photobooth
+#!desc= Locket Gold Photobooth
+#!distributor=Nightmarket Server
+#!author=duyvinh09
+# 💬 Discord: https://discord.gg/juY9tw5AJY
+# 🚀 Maintained by: Nightmarket Server
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Locket.png
+#!system=ios
+
+[Rule]
+AND,((DOMAIN,api.locketcamera.com),(PROTOCOL,UDP),(DEST-PORT,443)),REJECT
+AND,((DOMAIN,us-central1-locket-4252a.cloudfunctions.net),(PROTOCOL,UDP),(DEST-PORT,443)),REJECT
+AND,((DOMAIN,firebaseremoteconfig.googleapis.com),(PROTOCOL,UDP),(DEST-PORT,443)),REJECT
+
+[URL Rewrite]
+^https:\/\/api\.locketcamera\.com\/generateFilteredImage 'https://locket.dinhduyvinh.tech/generateFilteredImage' 307
+
+[Script]
+# RevenueCat - script hiện tại
+locket_revenuecat = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers), script-path=https://locket.dinhduyvinh.tech/js/Locket_Duyvinh09.js, requires-body=true, max-size=-1, timeout=60
+
+# Xóa header cache
+locket_delete_header = type=http-request, pattern=^https:\/\/(api\.revenuecat\.com|firebaseremoteconfig\.googleapis\.com)\/.+, script-path=https://locket.dinhduyvinh.tech/js/deleteHeader.js, timeout=60
+
+# Firebase Remote Config
+locket_unlocked = type=http-response, pattern=^https:\/\/firebaseremoteconfig\.googleapis\.com\/.+, script-path=https://locket.dinhduyvinh.tech/js/Locket_Unlocked.js?widget_frame=https%3A%2F%2Fi.ibb.co%2F1Yt1Dzzy%2FShin-chan-1.png, requires-body=true, max-size=-1, timeout=60
+
+# AI Filter / Photobooth
+locket_filters = type=http-request, pattern=^https:\/\/(api\.locketcamera\.com|us-central1-locket-4252a\.cloudfunctions\.net)\/(?:[^?#]*\/)?generateFilteredImage(?:\?.*)?$, script-path=https://locket.dinhduyvinh.tech/js/Locket_Filters.js, requires-body=true, max-size=-1, timeout=120
+
+[MITM]
+hostname = %APPEND% api.locketcamera.com, firebaseremoteconfig.googleapis.com, api.revenuecat.com
